@@ -106,6 +106,7 @@ VALUES ('Android', '1.0');
 
 INSERT INTO operating_system (name, version)
 VALUES ('Android', '2.0');
+
 -- name: iOS
 -- version: 4.0
 
