@@ -20,7 +20,7 @@ CREATE TABLE category_tbl (
    name VARCHAR(255) NOT NULL,
    subcategory VARCHAR(255) NOT NULL,
    CONSTRAINT name_unique UNIQUE (name, subcategory)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Create a table called operating_system with the following properties:
 -- id - an auto incrementing integer which is the primary key
@@ -35,7 +35,7 @@ CREATE TABLE operating_system (
    name VARCHAR(255) NOT NULL,
    version VARCHAR(255) NOT NULL,
    CONSTRAINT version_unique UNIQUE (name, version)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Create a table called device with the following properties:
 -- id - an auto incrementing integer which is the primary key
@@ -53,7 +53,7 @@ CREATE TABLE device (
    received DATE,
    isbroken BOOLEAN,
    FOREIGN KEY(cid) REFERENCES category_tbl(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Create a table called os_support with the following properties, this is a table representing a many-to-many relationship
 -- between devices and operating systems:
@@ -71,7 +71,7 @@ CREATE TABLE os_support (
    FOREIGN KEY(did) REFERENCES device(id),
    FOREIGN KEY(osid) REFERENCES operating_system(id),
    PRIMARY KEY (did, osid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- insert the following into the category_tbl table:
