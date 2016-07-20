@@ -119,30 +119,30 @@ VALUES ('iOS', '4.0');
 -- received - 1/2/1970
 -- isbroken - True
 
-INSERT INTO device (cid, name, received, isbroken)
-    SELECT id, 'Samsung Atlas', DATE '1970-01-02', true
-    FROM category_tbl
-    WHERE name='phone' AND subcategory='maybe a tablet?';
+INSERT INTO device (cid, name, received, isbroken) VALUES (
+  (SELECT id from category_tbl WHERE name='phone' && subcategory='maybe a tablet?'),
+  'Samsung Atlas', '1970-01-02', True
+);
 
 -- cid - reference to name: tablet subcategory: but kind of a laptop
 -- name - Nokia
 -- received - 5/6/1999
 -- isbroken - False
 
-INSERT INTO device (cid, name, received, isbroken)
-    SELECT id, 'Nokia', DATE '1999-05-06', false
-    FROM category_tbl
-    WHERE name='tablet' AND subcategory='but kind of a laptop';
+INSERT INTO device (cid, name, received, isbroken) VALUES (
+  (SELECT id from category_tbl WHERE name='tablet' && subcategory='but kind of a laptop'),
+  'Nokia', '1999-05-06', False
+);
 
 -- cid - reference to name: tablet subcategory: ereader
 -- name - jPad
 -- received - 11/18/2005
 -- isbroken - False
 
-INSERT INTO device (cid, name, received, isbroken)
-    SELECT id, 'jPad', DATE '2005-11-18', false
-    FROM category_tbl
-    WHERE name='tablet' AND subcategory='ereader';
+INSERT INTO device (cid, name, received, isbroken) VALUES (
+  (SELECT id from category_tbl WHERE name='tablet' && subcategory='ereader'),
+  'jPad', '2005-11-18', False
+);
 
 
 -- insert the following into the os_support table using subqueries to look up data as needed:
@@ -150,24 +150,27 @@ INSERT INTO device (cid, name, received, isbroken)
 -- os: Android 1.0
 -- notes: Works poorly
 
-INSERT INTO os_support (did, osid, notes)
-    VALUES((SELECT id FROM device WHERE name='Samsung Atlas'),
-           (SELECT id FROM operating_system WHERE name='Android' AND version='1.0'),
-           'Works poorly');
+INSERT INTO os_support (did, osid, notes) VALUES (
+  (SELECT id FROM device WHERE name='Samsung Atlas'),
+  (SELECT id FROM operating_system WHERE name='Android' && version='1.0'),
+  'Works poorly'
+);
 
 -- device: Samsung Atlas
 -- os: Android 2.0
 -- notes: NULL
 
-INSERT INTO os_support (did, osid)
-    VALUES((SELECT id FROM device WHERE name='Samsung Atlas'),
-           (SELECT id FROM operating_system WHERE name='Android' AND version='2.0'));
+INSERT INTO os_support (did, osid) VALUES (
+  (SELECT id FROM device WHERE name='Samsung Atlas'),
+  (SELECT id FROM operating_system WHERE name='Android' && version='2.0')
+);
 
 -- device: jPad
 -- os: iOS 4.0
 -- notes: NULL
 
-INSERT INTO os_support (did, osid)
-    VALUES((SELECT id FROM device WHERE name='jPad'),
-           (SELECT id FROM operating_system WHERE name='iOS' AND version='4.0'));
+INSERT INTO os_support (did, osid) values (
+  (SELECT id FROM device WHERE name='jPad'),
+  (SELECT id FROM operating_system WHERE name='iOS' && version='4.0')
+);
 
