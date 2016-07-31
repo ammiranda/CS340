@@ -1,0 +1,32 @@
+{
+  "name": "final_project",
+  "version": "0.0.1",
+  "description": "Final database project for CS340",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ammiranda/CS340.git"
+  },
+  "keywords": [
+    "databases",
+    "final",
+    "project",
+    "mysql",
+    "node"
+  ],
+  "author": "Alexander Miranda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ammiranda/CS340/issues"
+  },
+  "homepage": "https://github.com/ammiranda/CS340#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.11.1"
+  }
+}
