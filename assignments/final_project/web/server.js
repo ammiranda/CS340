@@ -2,10 +2,16 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var pool = mysql.createPool({
-	host: '',
-	user: '',
-	password: '',
-	database: ''
+	host: 'localhost',
+	user: process.env.DBUSER,
+	password: process.env.DBPASS,
+	database: process.env.DBNAME
+});
+
+pool.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+	if (err) console.log(err);
+
+	console.log('The solution is: ', rows[0].solution);
 });
 
 var app = express();
