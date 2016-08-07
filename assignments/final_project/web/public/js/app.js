@@ -1,13 +1,20 @@
-var jsonToTable = function(json) {
+var jsonToTable = function(json, tableName) {
   var table = "<table class='table-bordered'>";
   var parsed = json.results;
   var keys = getKeys(parsed[0]);
   table += getColumnHeaders(keys);
   $.each(parsed, function(i, val) {
-    var row = '<tr>';
+    var row = '';
+    var id;
     for (var key in val) {
-      row += '<td>' + val[key] + '</td>';
+      if (key !== 'id') {
+        row += '<td>' + val[key] + '</td>';
+      } else {
+        id = val[key];
+        row += "<tr data-id='" + val[key] + "'>";
+      }
     }
+    row += "<td><button data-type='" + tableName + "' data-id='" + id + "' class='btn btn-danger delete'>Delete</button></td>";
     row += '</tr>';
     table += row;
   });
@@ -38,15 +45,17 @@ var getKeys = function(data) {
   for (var key in data) {
     keys.push(key);
   }
-
   return keys;
 };
 
 var getColumnHeaders = function(keys) {
   var header = '<tr>';
   for (var i = 0; i < keys.length; i++) {
-    header += '<th>' + keys[i] + '</th>';
+    if (keys[i] !== 'id') {
+      header += '<th>' + keys[i] + '</th>';
+    }
   }
+  header += '<th>Delete</th>';
   header += '</tr>';
   return header;
 };
@@ -84,18 +93,46 @@ var submitEntry = function(e) {
   });  
 };
 
+var deleteEntry = function(e) {
+  e.preventDefault();
+  var req = { 'id': $(e.target).attr('data-id') };
+  var url = '/' + $(e.target).attr('data-type');
+
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    data: req,
+    type: 'DELETE',
+    success: function(data) {
+      render();
+    }
+  }); 
+}
+
 var renderTable = function(url, selector) {
   $.ajax({
     url: url,
     dataType: 'json',
     success: function(data) {
       $(selector).html('');
-      $(selector).append('<h3>' + selector.substring(1) + '</h3>' + jsonToTable(data));
+      $(selector).append('<h3>' + selector.substring(1) + '</h3>' + jsonToTable(data, selector.substring(1)));
       $(selector).append(composeForm(selector, getKeys(data.results[0])));
       $(selector + ' .save').on('click', submitEntry);
+      $(selector + ' .delete').on('click', deleteEntry);
     }
   });
-}
+};
+
+var makeSelect = function(data) {
+  
+};
+
+var renderSearch = function(selector) {
+  var searchForm = "<h3>Search Star Trek Characters</h3>";
+  searchForm += "<ul id='results'></ul>";
+  searchForm += "<form class='form-horizontal'><div class='form-group'>";
+  searchForm += "<label class='control-label'>";
+};
 
 var render = function() {
    renderTable('/actors', '#actors');
@@ -103,6 +140,7 @@ var render = function() {
    renderTable('/episodes', '#episodes');
    renderTable('/series', '#series');
    renderTable('/studios', '#studios');
+   renderSearch('#characterSearch');
 };
 
 $(document).ready(function() {
