@@ -29,11 +29,11 @@ VALUES ("Star Trek: The Original Series", "Gene", "Roddenberry", '1966-09-08', '
        ("Star Trek: Deep Space Nine", "Rick", "Berman", '1993-01-03', '1999-06-02', (SELECT id FROM studio WHERE name = "Paramount Domestic Television"));
 
 INSERT INTO episode (title, episode_number, season_number, air_date, series_id)
-VALUES ("The Trouble with Tribbles", 15, 2, '1967-12-29', (SELECT id FROM series WHERE name = "Star Trek: The Original Series")),
-       ("Legacy", 6, 4, '1990-10-29', (SELECT id FROM series WHERE name = "Star Trek: The Next Generation")),
-       ("Ensign Ro", 3, 5, '1991-10-07', (SELECT id FROM series WHERE name = "Star Trek: The Next Generation")),
-       ("The Swarm", 4, 3, '1996-09-25', (SELECT id FROM series WHERE name = "Star Trek: Voyager")),
-       ("Inquisition", 18, 6, '1998-04-08', (SELECT id FROM series WHERE name = "Star Trek: Deep Space Nine"));
+VALUES ("The Trouble with Tribbles", 15, 2, '1967-12-29', (SELECT id FROM series WHERE title = "Star Trek: The Original Series")),
+       ("Legacy", 6, 4, '1990-10-29', (SELECT id FROM series WHERE title = "Star Trek: The Next Generation")),
+       ("Ensign Ro", 3, 5, '1991-10-07', (SELECT id FROM series WHERE title = "Star Trek: The Next Generation")),
+       ("The Swarm", 4, 3, '1996-09-25', (SELECT id FROM series WHERE title = "Star Trek: Voyager")),
+       ("Inquisition", 18, 6, '1998-04-08', (SELECT id FROM series WHERE title = "Star Trek: Deep Space Nine"));
 
 INSERT INTO actor_series (actor_id, series_id)
 VALUES ((SELECT id FROM actor WHERE fname = "Patrick" AND lname = "Stewart"), (SELECT id FROM series WHERE title = "Star Trek: The Next Generation")),
