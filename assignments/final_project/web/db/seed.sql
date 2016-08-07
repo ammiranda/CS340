@@ -57,7 +57,16 @@ VALUES ((SELECT id FROM actor WHERE fname = "Patrick" AND lname = "Stewart"), (S
        ((SELECT id FROM actor WHERE fname = "William" AND lname = "Shatner"), (SELECT id FROM st_character WHERE fname = "James" AND lname = "Kirk"));
 
 INSERT INTO character_episode (character_id, episode_id)
-VALUES ((SELECT id FROM st_character WHERE fname = "Jean Luc" AND lname = "Picard"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE title = "Star Trek: The Next Generation"))),
-       ((SELECT id FROM st_character WHERE fname = "Data"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE title = "Star Trek: The Next Generation"))),
-       ((SELECT id FROM st_character WHERE fname = "Worf"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE title = "Star Trek: The Next Generation")));
-
+VALUES ((SELECT id FROM st_character WHERE fname = "Jean Luc" AND lname = "Picard"), (SELECT id FROM episode WHERE title = "Ensign Ro")),
+       ((SELECT id FROM st_character WHERE fname = "Data"), (SELECT id FROM episode WHERE title = "Ensign Ro")),
+       ((SELECT id FROM st_character WHERE fname = "Data"), (SELECT id FROM episode WHERE title = "Legacy"))
+       ((SELECT id FROM st_character WHERE fname = "Jean Luc" AND lname = "Picard"), (SELECT id FROM episode WHERE title = "Legacy")),
+       ((SELECT id FROM st_character WHERE fname = "Worf"), (SELECT id FROM episode WHERE title = "Legacy")),
+       ((SELECT id FROM st_character WHERE fname = "Worf"), (SELECT id FROM episode WHERE title = "Ensign Ro")),
+       ((SELECT id FROM st_character WHERE fname = "Worf"), (SELECT id FROM episode WHERE title = "Inquisition")),
+       ((SELECT id FROM st_character WHERE fname = "Miles" AND lname = "O'Brien"), (SELECT id FROM episode WHERE title = "Legacy")),
+       ((SELECT id FROM st_character WHERE fname = "Miles" AND lname = "O'Brien"), (SELECT id FROM episode WHERE title = "Ensign Ro")),
+       ((SELECT id FROM st_character WHERE fname = "Miles" AND lname = "O'Brien"), (SELECT id FROM episode WHERE title = "Inquisition")),
+       ((SELECT id FROM st_character WHERE fname = "Katherine" AND lname = "Janeway"), (SELECT id FROM episode WHERE title = "The Swarm")),
+       ((SELECT id FROM st_character WHERE fname = "James" AND lname = "Kirk"), (SELECT id FROM episode WHERE title = "The Trouble with Tribbles")),
+       ((SELECT id FROM st_character WHERE fname = "Spock"), (SELECT id FROM episode WHERE title = "The Trouble with Tribbles"))
