@@ -8,12 +8,6 @@ var pool = mysql.createPool({
 	database: process.env.DBNAME
 });
 
-pool.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-	if (err) console.log(err);
-
-	console.log('The solution is: ', rows[0].solution);
-});
-
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout: 'main'});
 
@@ -26,6 +20,66 @@ app.use(express.static('public'));
 
 app.get('/', function(req, res) {
 	res.render('home');
+});
+
+app.get('/actors', function(req, res) {
+  var ctx = {};
+  pool.query('SELECT * FROM actor', function(err, rows, fields) {
+    if (err) {
+       console.log(err);
+       return;
+    }
+    ctx.results = JSON.stringify(rows);
+    res.send(ctx);
+  });
+});
+
+app.get('/episodes', function(req, res) {
+  var ctx = {};
+  pool.query('SELECT * FROM episode', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    ctx.results = JSON.stringify(rows);
+    res.send(ctx);
+  });
+});
+
+app.get('/studios', function(req, res) {
+  var ctx = {};
+  pool.query('SELECT * FROM studio', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    ctx.results = JSON.stringify(rows);
+    res.send(ctx);
+  });
+});
+
+app.get('/series', function(req, res) {
+  var ctx = {};
+  pool.query('SELECT * FROM series', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    ctx.results = JSON.stringify(rows);
+    res.send(ctx);
+  });
+});
+
+app.get('/characters', function(req, res) {
+  var ctx = {};
+  pool.query('SELECT * FROM st_character', function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    ctx.results = JSON.stringify(rows);
+    res.send(ctx);
+  });
 });
 
 app.use(function(req, res) {
