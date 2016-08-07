@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS `actor`;
+DROP TABLE IF EXISTS `st_character`;
+DROP TABLE IF EXISTS `series`;
+DROP TABLE IF EXISTS `episode`;
+DROP TABLE IF EXISTS `studio`;
+DROP TABLE IF EXISTS `actor_character`;
+DROP TABLE IF EXISTS `character_episode`;
+DROP TABLE IF EXISTS `actor_series`;
+
 CREATE TABLE `actor` (
    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
    `fname` VARCHAR(255) NOT NULL,
