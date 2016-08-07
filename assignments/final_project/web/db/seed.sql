@@ -57,7 +57,7 @@ VALUES ((SELECT id FROM actor WHERE fname = "Patrick" AND lname = "Stewart"), (S
        ((SELECT id FROM actor WHERE fname = "William" AND lname = "Shatner"), (SELECT id FROM st_character WHERE fname = "James" AND lname = "Kirk"));
 
 INSERT INTO character_episode (character_id, episode_id)
-VALUES ((SELECT id FROM st_character WHERE fname = "Jean Luc" AND lname = "Picard"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE name = "Star Trek: The Next Generation"))),
-       ((SELECT id FROM st_character WHERE fname = "Data"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE name = "Star Trek: The Next Generation"))),
-       ((SELECT id FROM st_character WHERE fname = "Worf"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE name = "Star Trek: The Next Generation")));
+VALUES ((SELECT id FROM st_character WHERE fname = "Jean Luc" AND lname = "Picard"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE title = "Star Trek: The Next Generation"))),
+       ((SELECT id FROM st_character WHERE fname = "Data"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE title = "Star Trek: The Next Generation"))),
+       ((SELECT id FROM st_character WHERE fname = "Worf"), (SELECT id FROM episode WHERE series_id = (SELECT id FROM series WHERE title = "Star Trek: The Next Generation")));
 
