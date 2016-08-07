@@ -11,6 +11,8 @@ var jsonToTable = function(json) {
   return table;  
 };
 
+var addColumnHeaders(data
+
 var makeRequest = function(url, selector) {
   $.ajax({
     url: url,
@@ -21,12 +23,14 @@ var makeRequest = function(url, selector) {
   });
 }
 
-$(document).ready(function() {
-   $('body').append('<h1>jquery works</h1>');
-
+var render = function() {
    makeRequest('/actors', '#actors');
    makeRequest('/characters', '#characters');
    makeRequest('/episodes', '#episodes');
    makeRequest('/series', '#series');
    makeRequest('/studios', '#studios');
+};
+
+$(document).ready(function() {
+  render();
 });
