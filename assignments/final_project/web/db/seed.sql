@@ -69,4 +69,4 @@ VALUES ((SELECT id FROM st_character WHERE fname = "Jean Luc" AND lname = "Picar
        ((SELECT id FROM st_character WHERE fname = "Miles" AND lname = "O'Brien"), (SELECT id FROM episode WHERE title = "Inquisition")),
        ((SELECT id FROM st_character WHERE fname = "Katherine" AND lname = "Janeway"), (SELECT id FROM episode WHERE title = "The Swarm")),
        ((SELECT id FROM st_character WHERE fname = "James" AND lname = "Kirk"), (SELECT id FROM episode WHERE title = "The Trouble with Tribbles")),
-       ((SELECT id FROM st_character WHERE fname = "Spock"), (SELECT id FROM episode WHERE title = "The Trouble with Tribbles"))
+       ((SELECT id FROM st_character WHERE fname = "Spock"), (SELECT id FROM episode WHERE title = "The Trouble with Tribbles"));
