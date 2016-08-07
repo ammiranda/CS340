@@ -23,6 +23,8 @@ CREATE TABLE `series` (
    `end_date` DATE,
    `studio_id` INT(11),
    FOREIGN KEY(`studio_id`) REFERENCES studio(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `episode` (
@@ -33,6 +35,8 @@ CREATE TABLE `episode` (
    `air_date` DATE,
    `series_id` INT(11),
    FOREIGN KEY(`series_id`) REFERENCES series(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `studio` (
@@ -46,16 +50,24 @@ CREATE TABLE `actor_series` (
    `actor_id` INT(11),
    `series_id` INT(11),
    PRIMARY KEY (`actor_id`, `series_id`),
-   FOREIGN KEY (`actor_id`) REFERENCES actor(`id`),
+   FOREIGN KEY (`actor_id`) REFERENCES actor(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
    FOREIGN KEY (`series_id`) REFERENCES series(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `actor_character` (
    `actor_id` INT(11),
    `character_id` INT(11),
    PRIMARY KEY (`actor_id`, `character_id`),
-   FOREIGN KEY (`actor_id`) REFERENCES actor(`id`),
+   FOREIGN KEY (`actor_id`) REFERENCES actor(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
    FOREIGN KEY (`character_id`) REFERENCES st_character(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `character_episode` (
