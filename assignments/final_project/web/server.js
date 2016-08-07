@@ -82,6 +82,69 @@ app.get('/characters', function(req, res) {
   });
 });
 
+app.post('/actors', function(req, res) {
+  var body = req.body;
+  var fname = body.fname;
+  var lname = body.lname;
+  var website = body.website;
+  var twitter = body.twitter;
+  var updateStr = "INSERT INTO actor (fname, lname, website, twitter)";
+  updateStr += " VALUES ('" + fname + "','" + lname + "','" + website + "','";
+  updateStr += twitter + "');";
+
+  pool.query(updateStr, function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.send(JSON.stringify(rows));
+  });
+});
+
+app.post('/characters', function(req, res) {
+  var body = req.body;
+  var fname = body.fname;
+  var lname = body.lname;
+  var race = body.race;
+  var updateStr = "INSERT INTO st_character (fname, lname, race)";
+  updateStr += " VALUES ('" + fname + "','" + lname + "','" + race +"');";
+
+  pool.query(updateStr, function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.send(JSON.stringify(rows));
+  });
+});
+
+app.post('/episodes', function(req, res) {
+  var body = req.body;
+  var title = body.title;
+  var ep_num = body.episode_number;
+  var season_num = body.season_number;
+  var air_date = body.air_date;
+  var series_id = body.series_id;
+});
+
+app.post('/studios', function(req, res) {
+  var body = req.body;
+  var name = body.name;
+  var address = body.address;
+  var website = body.website;
+  var updateStr = "INSERT INTO studio (name, address, website)";
+  updateStr += " VALUES ('" + name + "','" + address + "','" + website;
+  updateStr += "');";
+
+  pool.query(updateStr, function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.send(JSON.stringify(rows));
+  });
+});
+
 app.use(function(req, res) {
 	res.status(404);
 	res.render('404');
