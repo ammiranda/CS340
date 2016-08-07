@@ -22,64 +22,36 @@ app.get('/', function(req, res) {
 	res.render('home');
 });
 
-app.get('/actors', function(req, res) {
+var selectTableData = function(res, table) {
   var ctx = {};
-  pool.query('SELECT * FROM actor', function(err, rows, fields) {
+  pool.query('SELECT * FROM ' + table, function(err, rows, fields) {
     if (err) {
-       console.log(err);
-       return;
+      console.log(err);
+      return;
     }
     ctx.results = rows;
     res.send(ctx);
   });
+};
+
+app.get('/actors', function(req, res) {
+  selectTableData(res, 'actor');
 });
 
 app.get('/episodes', function(req, res) {
-  var ctx = {};
-  pool.query('SELECT * FROM episode', function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    ctx.results = rows;
-    res.send(ctx);
-  });
+  selectTableData(res, 'episode');
 });
 
 app.get('/studios', function(req, res) {
-  var ctx = {};
-  pool.query('SELECT * FROM studio', function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    ctx.results = rows;
-    res.send(ctx);
-  });
+  selectTableData(res, 'studio');
 });
 
 app.get('/series', function(req, res) {
-  var ctx = {};
-  pool.query('SELECT * FROM series', function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    ctx.results = rows;
-    res.send(ctx);
-  });
+  selectTableData(res, 'series');
 });
 
 app.get('/characters', function(req, res) {
-  var ctx = {};
-  pool.query('SELECT * FROM st_character', function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    ctx.results = rows;
-    res.send(ctx);
-  });
+  selectTableData(res, 'st_character');
 });
 
 app.post('/actors', function(req, res) {
@@ -143,6 +115,39 @@ app.post('/studios', function(req, res) {
     }
     res.send(JSON.stringify(rows));
   });
+});
+
+var deleteEntry = function(req, res, table) {
+  var ctx = {};
+  var id = req.body.id;
+  pool.query('DELETE FROM ' + table + ' WHERE id = ' + id, function(err, rows, fields) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    ctx.results = JSON.stringify(rows);
+    res.send(ctx);
+  });
+};
+
+app.delete('/actors', function(req, res) {
+  deleteEntry(req, res, 'actor');
+});
+
+app.delete('/characters', function(req, res) {
+  deleteEntry(req, res, 'st_character');
+});
+
+app.delete('/studios', function(req, res) {
+  deleteEntry(req, res, 'studio');
+});
+
+app.delete('/episodes', function(req, res) {
+  deleteEntry(req, res, 'episode');
+});
+
+app.delete('/series', function(req, res) {
+  deleteEntry(req, res, 'series');
 });
 
 app.use(function(req, res) {
