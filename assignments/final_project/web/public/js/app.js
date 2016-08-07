@@ -1,7 +1,8 @@
 var jsonToTable = function(json) {
   var table = "<table class='table-bordered'>";
   var parsed = json.results;
-  table += getColumnHeaders(parsed[0]);
+  var keys = getKeys(parsed[0]);
+  table += getColumnHeaders(keys);
   $.each(parsed, function(i, val) {
     var row = '<tr>';
     for (var key in val) {
@@ -14,10 +15,36 @@ var jsonToTable = function(json) {
   return table;  
 };
 
-var getColumnHeaders = function(data) {
-  var header = '<tr>';
+var composeForm = function(keys) {
+  var form = "<form class='form-horizontal'>";
+  for (var i = 0; i < keys.length; i++) {
+    if (keys[i] === 'id') continue;
+    form += "<div class='form-group'><label class='col-sm-2 control-label'>" + keys[i] + "</label>";
+    form += "<div class='col-sm-6'>";
+    form += "<input type='text' class='form-control' id='" + keys[i] + "'>";
+    form += "</div></div>";
+  }
+  form += "<div class='form-group'><div class='col-sm-10 col-sm-offset-7'>";
+  form += "<button class='btn btn-submit save' type='submit'>Save</button>";
+  form += "</div></div>";
+  form += "</form>";
+
+  return form;
+};
+
+var getKeys = function(data) {
+  var keys = [];
   for (var key in data) {
-    header += '<th>' + key + '</th>';
+    keys.push(key);
+  }
+
+  return keys;
+};
+
+var getColumnHeaders = function(keys) {
+  var header = '<tr>';
+  for (var i = 0; i < keys.length; i++) {
+    header += '<th>' + keys[i] + '</th>';
   }
   header += '</tr>';
   return header;
@@ -28,7 +55,8 @@ var renderTable = function(url, selector) {
     url: url,
     dataType: 'json',
     success: function(data) {
-      $(selector).append(jsonToTable(data));
+      $(selector).append('<h3>' + selector.substring(1) + '</h3>' + jsonToTable(data));
+      $(selector).append(composeForm(getKeys(data.results[0])));
     }
   });
 }
