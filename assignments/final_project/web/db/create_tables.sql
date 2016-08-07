@@ -18,8 +18,7 @@ CREATE TABLE `actor` (
 CREATE TABLE `st_character` (
    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
    `fname` VARCHAR(255) NOT NULL,
-   `lname` VARCHAR(255) NOT NULL,
-   `role` VARCHAR(255) NOT NULL,
+   `lname` VARCHAR(255),
    `race` VARCHAR(255) NOT NULL
 ) ENGINE=’innoDB’;
 
