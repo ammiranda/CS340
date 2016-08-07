@@ -83,6 +83,10 @@ CREATE TABLE `character_episode` (
    `character_id` INT(11),
    `episode_id` INT(11),
    PRIMARY KEY (`character_id`, `episode_id`),
-   FOREIGN KEY (`character_id`) REFERENCES st_character(`id`),
+   FOREIGN KEY (`character_id`) REFERENCES st_character(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
    FOREIGN KEY (`episode_id`) REFERENCES episode(`id`)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
 ) ENGINE=’innoDB’;
