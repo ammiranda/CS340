@@ -1,4 +1,3 @@
-SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `actor`;
 DROP TABLE IF EXISTS `st_character`;
 DROP TABLE IF EXISTS `series`;
@@ -24,6 +23,13 @@ CREATE TABLE `st_character` (
    `race` VARCHAR(255) NOT NULL
 ) ENGINE=’innoDB’;
 
+CREATE TABLE `studio` (
+   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
+   `name` VARCHAR(255) NOT NULL,
+   `address` VARCHAR(255),
+   `website` VARCHAR(255)
+) ENGINE=’innoDB’;
+
 CREATE TABLE `series` (
    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
    `title` VARCHAR(255) NOT NULL,
@@ -47,13 +53,6 @@ CREATE TABLE `episode` (
    FOREIGN KEY(`series_id`) REFERENCES series(`id`)
       ON DELETE CASCADE
       ON UPDATE CASCADE
-) ENGINE=’innoDB’;
-
-CREATE TABLE `studio` (
-   `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
-   `name` VARCHAR(255) NOT NULL,
-   `address` VARCHAR(255),
-   `website` VARCHAR(255)
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `actor_series` (
