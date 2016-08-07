@@ -6,12 +6,12 @@ CREATE TABLE `actor` (
    `twitter` VARCHAR(255)	
 ) ENGINE=’innoDB’;
 
-CREATE TABLE `character` (
+CREATE TABLE `st_character` (
    `id` INT(11) PRIMARY KEY AUTO_INCREMENT,
    `fname` VARCHAR(255) NOT NULL,
    `lname` VARCHAR(255) NOT NULL,
    `role` VARCHAR(255) NOT NULL,
-   `race` ENUM(‘Human’, ‘Bajoran’, ‘Cardassian’, ‘Klingon’, ‘Vulcan’, ‘Borg’, ‘Ferengi’) NOT NULL
+   `race` VARCHAR(255) NOT NULL
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `series` (
@@ -22,7 +22,7 @@ CREATE TABLE `series` (
    `start_date` DATE,
    `end_date` DATE,
    `studio_id` INT(11),
-   FOREIGN KEY(`studio_id`) REFERENCES `studio`(`id`)
+   FOREIGN KEY(`studio_id`) REFERENCES studio(`id`)
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `episode` (
@@ -32,7 +32,7 @@ CREATE TABLE `episode` (
    `season_number` INT(11) NOT NULL,
    `air_date` DATE,
    `series_id` INT(11),
-   FOREIGN KEY(`series_id`) REFERENCES `series`(`id`)
+   FOREIGN KEY(`series_id`) REFERENCES series(`id`)
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `studio` (
@@ -46,22 +46,22 @@ CREATE TABLE `actor_series` (
    `actor_id` INT(11),
    `series_id` INT(11),
    PRIMARY KEY (`actor_id`, `series_id`),
-   FOREIGN KEY (`actor_id`) REFERENCES `actor`(`id`),
-   FOREIGN KEY (`series_id`) REFERENCES `series`(`id`)
+   FOREIGN KEY (`actor_id`) REFERENCES actor(`id`),
+   FOREIGN KEY (`series_id`) REFERENCES series(`id`)
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `actor_character` (
    `actor_id` INT(11),
    `character_id` INT(11),
    PRIMARY KEY (`actor_id`, `character_id`),
-   FOREIGN KEY (`actor_id`) REFERENCES `actor`(`id`),
-   FOREIGN KEY (`character_id`) REFERENCES `character`(`id`)
+   FOREIGN KEY (`actor_id`) REFERENCES actor(`id`),
+   FOREIGN KEY (`character_id`) REFERENCES st_character(`id`)
 ) ENGINE=’innoDB’;
 
 CREATE TABLE `character_episode` (
    `character_id` INT(11),
    `episode_id` INT(11),
    PRIMARY KEY (`character_id`, `episode_id`),
-   FOREIGN KEY (`character_id`) REFERENCES `character`(`id`),
-   FOREIGN KEY (`episode_id`) REFERENCES `episode`(`id`)
+   FOREIGN KEY (`character_id`) REFERENCES st_character(`id`),
+   FOREIGN KEY (`episode_id`) REFERENCES episode(`id`)
 ) ENGINE=’innoDB’;
