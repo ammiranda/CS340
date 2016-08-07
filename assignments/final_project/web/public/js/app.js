@@ -1,19 +1,29 @@
 var jsonToTable = function(json) {
-  var table = "<table>";
-  var row = $('<tr />');
-  var parsed = JSON.parse(json.results);
+  var table = "<table class='table-bordered'>";
+  var parsed = json.results;
+  table += getColumnHeaders(parsed[0]);
   $.each(parsed, function(i, val) {
+    var row = '<tr>';
     for (var key in val) {
-      table += '<tr>' + val[key] + '</tr>';
+      row += '<td>' + val[key] + '</td>';
     }
+    row += '</tr>';
+    table += row;
   });
   table += "</table>";
   return table;  
 };
 
-var addColumnHeaders(data
+var getColumnHeaders = function(data) {
+  var header = '<tr>';
+  for (var key in data) {
+    header += '<th>' + key + '</th>';
+  }
+  header += '</tr>';
+  return header;
+};
 
-var makeRequest = function(url, selector) {
+var renderTable = function(url, selector) {
   $.ajax({
     url: url,
     dataType: 'json',
@@ -24,11 +34,11 @@ var makeRequest = function(url, selector) {
 }
 
 var render = function() {
-   makeRequest('/actors', '#actors');
-   makeRequest('/characters', '#characters');
-   makeRequest('/episodes', '#episodes');
-   makeRequest('/series', '#series');
-   makeRequest('/studios', '#studios');
+   renderTable('/actors', '#actors');
+   renderTable('/characters', '#characters');
+   renderTable('/episodes', '#episodes');
+   renderTable('/series', '#series');
+   renderTable('/studios', '#studios');
 };
 
 $(document).ready(function() {

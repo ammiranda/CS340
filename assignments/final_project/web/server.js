@@ -29,7 +29,7 @@ app.get('/actors', function(req, res) {
        console.log(err);
        return;
     }
-    ctx.results = JSON.stringify(rows);
+    ctx.results = rows;
     res.send(ctx);
   });
 });
@@ -41,7 +41,7 @@ app.get('/episodes', function(req, res) {
       console.log(err);
       return;
     }
-    ctx.results = JSON.stringify(rows);
+    ctx.results = rows;
     res.send(ctx);
   });
 });
@@ -53,7 +53,7 @@ app.get('/studios', function(req, res) {
       console.log(err);
       return;
     }
-    ctx.results = JSON.stringify(rows);
+    ctx.results = rows;
     res.send(ctx);
   });
 });
@@ -65,7 +65,7 @@ app.get('/series', function(req, res) {
       console.log(err);
       return;
     }
-    ctx.results = JSON.stringify(rows);
+    ctx.results = rows;
     res.send(ctx);
   });
 });
@@ -77,7 +77,7 @@ app.get('/characters', function(req, res) {
       console.log(err);
       return;
     }
-    ctx.results = JSON.stringify(rows);
+    ctx.results = rows;
     res.send(ctx);
   });
 });
