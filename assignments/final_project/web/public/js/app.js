@@ -95,7 +95,21 @@ var submitEntry = function(e) {
 
 var deleteEntry = function(e) {
   e.preventDefault();
-  var req = { 'id': $(e.target).attr('data-id') };
+  var req = {};
+  var id = $(e.target).attr('data-id');
+  if (id !== 'undefined') {
+    req = { 'id': id };
+  } else {
+    var selector = $(e.target).attr('data-type');
+    var keysArr = $('#' + selector + ' th').map(function(){
+      return $(this).text();              
+    }).get();
+    var valuesArr = $(e.target).closest('tr').children().map(function(){
+      return $(this).text();
+    });
+    req[keysArr[0]] = valuesArr[0];
+    req[keysArr[1]] = valuesArr[1];
+  }
   var url = '/' + $(e.target).attr('data-type');
 
   $.ajax({
@@ -124,7 +138,11 @@ var renderTable = function(url, selector) {
 };
 
 var makeSelect = function(data) {
-  
+  var str = '';
+  for (var key in data) {
+    str += "<option value='" + data[key] + "'>" + data[key] + "</option>"; 
+  }
+  return str;
 };
 
 var renderSearch = function(selector) {
@@ -132,6 +150,8 @@ var renderSearch = function(selector) {
   searchForm += "<ul id='results'></ul>";
   searchForm += "<form class='form-horizontal'><div class='form-group'>";
   searchForm += "<label class='control-label'>";
+  
+  $(selector).append(searchForm);
 };
 
 var render = function() {
@@ -143,7 +163,7 @@ var render = function() {
    renderTable('/actor_character', '#actor_character');
    renderTable('/actor_series', '#actor_series');
    renderTable('/character_episode', '#character_episode');
-   renderSearch('#characterSearch');
+   renderSearch('#character_search');
 };
 
 $(document).ready(function() {
