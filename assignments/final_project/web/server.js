@@ -66,13 +66,13 @@ app.get('/character_episode', function(req, res) {
   selectTableData(res, 'character_episode');
 });
 
-app.get('/search_character_episode', function(req, res) {
+app.post('/search_character_episode', function(req, res) {
   var ctx = {};
   var body = req.body;
-  var queryStr = "SELECT st_character.fname, st_character.lname FROM st_character";
-  queryStr += 'INNER JOIN character_episode ON st_character.id = character_episode.character_id';
+  var queryStr = "SELECT st_character.fname, st_character.lname FROM st_character ";
+  queryStr += 'INNER JOIN character_episode ON st_character.id = character_episode.character_id ';
   queryStr += 'INNER JOIN episode ON episode.id = character_episode.episode_id';
-  queryStr += 'WHERE episode.title = ' + body.title;
+  queryStr += ' WHERE episode.title = "' + body.title + '";';
 
   pool.query(queryStr, function(err, rows, fields) {
     if (err) {

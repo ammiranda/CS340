@@ -145,13 +145,26 @@ var makeSelect = function(data) {
   return str;
 };
 
-var renderSearch = function(selector) {
-  var searchForm = "<h3>Search Star Trek Characters</h3>";
-  searchForm += "<ul id='results'></ul>";
-  searchForm += "<form class='form-horizontal'><div class='form-group'>";
-  searchForm += "<label class='control-label'>";
-  
-  $(selector).append(searchForm);
+var searchChar = function(e) {
+  e.preventDefault();
+
+  var ep_title = $('#title').val();
+  var obj = { 'title': ep_title };
+  console.log(obj);
+  $.ajax({
+    dataType: 'json',
+    type: 'POST',
+    url: '/search_character_episode',
+    data: obj,
+    success: function(data) {
+      var results = data.results;
+      $('.search_results').html('');
+      for (var i = 0; i < results.length; i++) {
+        var str = '<li>' + results[i].fname + ' ' + results[i].lname + '</li>';
+        $('.search_results').append(str);
+      }
+    }
+  });
 };
 
 var render = function() {
@@ -163,7 +176,7 @@ var render = function() {
    renderTable('/actor_character', '#actor_character');
    renderTable('/actor_series', '#actor_series');
    renderTable('/character_episode', '#character_episode');
-   renderSearch('#character_search');
+   $('.search').on('click', searchChar);
 };
 
 $(document).ready(function() {
