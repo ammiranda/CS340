@@ -54,15 +54,35 @@ app.get('/characters', function(req, res) {
   selectTableData(res, 'st_character');
 });
 
-app.post('/actors', function(req, res) {
-  var body = req.body;
-  var fname = body.fname;
-  var lname = body.lname;
-  var website = body.website;
-  var twitter = body.twitter;
-  var updateStr = "INSERT INTO actor (fname, lname, website, twitter)";
-  updateStr += " VALUES ('" + fname + "','" + lname + "','" + website + "','";
-  updateStr += twitter + "');";
+app.get('/actor_character', function(req, res) {
+  selectTableData(res, 'actor_character');
+});
+
+app.get('/actor_series', function(req, res) {
+  selectTableData(res, 'actor_series');
+});
+
+app.get('/character_episode', function(req, res) {
+  selectTableData(res, 'character_episode');
+});
+
+var generateUpdateStr = function(body, table) {
+  var keys = [];
+  var values = [];
+  var str = '';
+  for (var key in body) {
+    keys.push(key);
+    values.push("'" + body[key] + "'");
+  }
+  str += "INSERT INTO " + table;
+  str += "(" + keys.join(",") + ")";
+  str += " VALUES (" + values.join(",") + ");";
+
+  return str;
+};
+
+var updateEntry = function(req, res, table) {
+  var updateStr = generateUpdateStr(req.body, table);
 
   pool.query(updateStr, function(err, rows, fields) {
     if (err) {
@@ -71,23 +91,14 @@ app.post('/actors', function(req, res) {
     }
     res.send(JSON.stringify(rows));
   });
+};
+
+app.post('/actors', function(req, res) {
+  updateEntry(req, res, 'actor');
 });
 
 app.post('/characters', function(req, res) {
-  var body = req.body;
-  var fname = body.fname;
-  var lname = body.lname;
-  var race = body.race;
-  var updateStr = "INSERT INTO st_character (fname, lname, race)";
-  updateStr += " VALUES ('" + fname + "','" + lname + "','" + race +"');";
-
-  pool.query(updateStr, function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    res.send(JSON.stringify(rows));
-  });
+  updateEntry(req, res, 'st_character');
 });
 
 app.post('/episodes', function(req, res) {
@@ -100,21 +111,19 @@ app.post('/episodes', function(req, res) {
 });
 
 app.post('/studios', function(req, res) {
-  var body = req.body;
-  var name = body.name;
-  var address = body.address;
-  var website = body.website;
-  var updateStr = "INSERT INTO studio (name, address, website)";
-  updateStr += " VALUES ('" + name + "','" + address + "','" + website;
-  updateStr += "');";
+  updateEntry(req, res, 'studio');
+});
 
-  pool.query(updateStr, function(err, rows, fields) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    res.send(JSON.stringify(rows));
-  });
+app.post('/actor_character', function(req, res) {
+  updateEntry(req, res, 'actor_character');
+});
+
+app.post('/actor_series', function(req, res) {
+  updateEntry(req, res, 'actor_series');
+});
+
+app.post('/character_episode', function(req, res) {
+  updateEntry(req, res, 'character_episode');
 });
 
 var deleteEntry = function(req, res, table) {

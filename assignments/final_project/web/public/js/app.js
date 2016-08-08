@@ -140,6 +140,9 @@ var render = function() {
    renderTable('/episodes', '#episodes');
    renderTable('/series', '#series');
    renderTable('/studios', '#studios');
+   renderTable('/actor_character', '#actor_character');
+   renderTable('/actor_series', '#actor_series');
+   renderTable('/character_episode', '#character_episode');
    renderSearch('#characterSearch');
 };
 
